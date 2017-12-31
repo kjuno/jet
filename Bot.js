@@ -35,7 +35,7 @@ client.on('message', msg => {
     var channel = msg.channel;
 
     switch(cmd){
-        case`${prefix}server`:
+        case`${prefix}getServerInfo`:
             var embed = new Discord.RichEmbed;
             embed.setTitle(`Infos über den Server: ${msg.guild.name}`);
             embed.addField("Server erstellt am:", getDateAsString(msg.guild.createdAt));
@@ -48,9 +48,25 @@ client.on('message', msg => {
             embed.setColor(0x3adb1e);
             channel.send(embed);
             break;
-        case`${prefix}prefix`:
+        case`${prefix}setPrefix`:
             prefix = args[1];
             channel.send(embed(`Prefix wurde in \"${prefix}\" geändert!`, 0x3adb1e));
+            break;
+        case`${prefix}getInfo`:
+            var mention = msg.mentions.members.first();
+            if(!mention){
+                channel.send(embed('Bitte gib einen User an!',0xef0202)); return
+            }
+            var embed = new Discord.RichEmbed;
+            embed.setColor(0x3adb1e);
+            embed.setTitle(`Infos über den Spieler: \"${mention.displayName}\"`)
+            embed.addField("Name:", mention.user.username);
+            embed.addField("Nickname:", mention.nickname == null ? 'keins' : mention.nickname);
+            embed.addField("ID:", mention.id);
+            embed.addField("Höchste Rolle:", mention.highestRole.name);
+            embed.addField("Gejoint am:", getDateAsString(mention.joinedAt));
+            embed.setThumbnail(msg.guild.iconURL);
+            channel.send(embed);
             break;
     }
 });
