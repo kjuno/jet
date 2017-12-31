@@ -12,8 +12,18 @@ function embed(string, color){
     return embed;
 }
 
+function getDateAsString(date){
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var year = date.getFullYear();
+    var hour = date.getHours();
+    var minutes = date.getMinutes();
+    return day + "." + month + "." + year + " um " + hour + ":" + minutes + " Uhr";
+}
+
 client.on('ready', () => {
-  console.log(`Bot ist einsatzbereit! ${client.user.username}`);
+  console.log(`Der ${client.user.username} mit seinen V8 Raketen ist bereit!`);
+  client.user.setGame('mit seinen V8 Raketen');
 });
 
 client.on('message', msg => {
@@ -26,11 +36,21 @@ client.on('message', msg => {
 
     switch(cmd){
         case`${prefix}server`:
-            channel.send(embed(`Servername: ${msg.guild.name}`, 0x3adb1e));
+            var embed = new Discord.RichEmbed;
+            embed.setTitle(`Infos über den Server: ${msg.guild.name}`);
+            embed.addField("Server erstellt am:", getDateAsString(msg.guild.createdAt));
+            embed.addField("AFKChannel:" , msg.guild.afkChannel);
+            embed.addField("AFKTimeout;" , msg.guild.afkTimeout);
+            embed.addField("Users:" , msg.guild.memberCount.toString());
+            embed.addField("Owner:" , msg.guild.owner);
+            embed.addField("Name:" , msg.guild.name);
+            embed.setThumbnail(msg.guild.iconURL);
+            embed.setColor(0x3adb1e);
+            channel.send(embed);
             break;
         case`${prefix}prefix`:
             prefix = args[1];
-            channel.send(`Prefix wurde in \"${prefix}\" geändert!`)
+            channel.send(embed(`Prefix wurde in \"${prefix}\" geändert!`, 0x3adb1e));
             break;
     }
 });
