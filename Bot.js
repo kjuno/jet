@@ -24,20 +24,20 @@ function getDateAsString(date){
 }
 
 client.on('ready', () => {
-  console.log(`Der ${client.user.username} mit seinen V8 Raketen ist bereit!`);
+  console.log(`[INFO] Der Bot \"${client.user.username}\" ist bereit!`);
   client.user.setGame('mit seinen V8 Raketen');
 });
 
 client.on('message', msg => {
     if(msg.author == client.user) return;
 
-    var content = msg.content.toString();
+    var content = msg.content.toLowerCase();
     var args = content.split(' ', 2);
     var cmd = args[0];
     var channel = msg.channel;
 
     switch(cmd){
-        case`${prefix}getServerInfo`:
+        case`${prefix}serverinfo`:
             var embed = new Discord.RichEmbed;
             embed.setTitle(`Infos über den Server: ${msg.guild.name}`);
             embed.addField("Server erstellt am:", getDateAsString(msg.guild.createdAt));
@@ -50,7 +50,7 @@ client.on('message', msg => {
             embed.setColor(green);
             channel.send(embed);
             break;
-        case`${prefix}setPrefix`:
+        case`${prefix}prefix`:
             if(args[1] == undefined){
                 channel.send(createEmbed('Bitte gib einen Prefix an!', red));
                 return;
@@ -58,7 +58,7 @@ client.on('message', msg => {
             prefix = args[1];
             channel.send(createEmbed(`Prefix wurde in \"${prefix}\" geändert!`, green));
             break;
-        case`${prefix}getInfo`:
+        case`${prefix}about`:
             var mention = msg.mentions.members.first();
             if(!mention){
                 channel.send(createEmbed('Bitte gib einen User an!', red)); 
