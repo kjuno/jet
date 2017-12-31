@@ -55,7 +55,8 @@ client.on('message', msg => {
         case`${prefix}getInfo`:
             var mention = msg.mentions.members.first();
             if(!mention){
-                channel.send(embed('Bitte gib einen User an!',0xef0202)); return
+                channel.send(embed('Bitte gib einen User an!', 0xef0202)); 
+                return;
             }
             var embed = new Discord.RichEmbed;
             embed.setColor(0x3adb1e);
@@ -63,11 +64,15 @@ client.on('message', msg => {
             embed.addField("Name:", mention.user.username);
             embed.addField("Nickname:", mention.nickname == null ? 'keins' : mention.nickname);
             embed.addField("ID:", mention.id);
+            embed.addField("Spielt gerade:", mention.user.presence.game == null ? 'nichts' : mention.user.presence.game.name);
+            embed.addField("Account erstellt am:" , getDateAsString(mention.user.createdAt));
+            embed.addField("Status:", mention.user.presence.status);
             embed.addField("Höchste Rolle:", mention.highestRole.name);
             embed.addField("Gejoint am:", getDateAsString(mention.joinedAt));
-            embed.setThumbnail(msg.guild.iconURL);
+            embed.setThumbnail(mention.user.avatarURL);
             channel.send(embed);
             break;
+        
     }
 });
 
