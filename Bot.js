@@ -23,6 +23,15 @@ function getDateAsString(date){
     return day + "." + month + "." + year + " um " + hour + ":" + minutes + " Uhr";
 }
 
+String.prototype.oneSplit = function(char){ 
+    var arr = new Array(); 
+    arr[0] = this.substring(0, this.indexOf(char)); 
+    arr[1] = this.substring(this.indexOf(char) + 1); 
+    return arr; 
+}
+
+Date.prototype.getDateAsString = 
+
 client.on('ready', () => {
   console.log(`[INFO] Der Bot \"${client.user.username}\" ist bereit!`);
   client.user.setGame('mit seinen V8 Raketen');
@@ -32,7 +41,7 @@ client.on('message', msg => {
     if(msg.author == client.user) return;
 
     var content = msg.content.toLowerCase();
-    var args = content.split(' ', 2);
+    var args = content.oneSplit(" ");
     var cmd = args[0];
     var channel = msg.channel;
 
