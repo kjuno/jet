@@ -1,5 +1,5 @@
 # jet
-jet is a Disord Bot created with discord.js and JS in VSCode.
+jet is a Discord Bot created with discord.js and JS in VSCode.
 # Installation
 jet requires [Node.js](https://nodejs.org/) and [discord.js](https://discord.js.org/#/)
 
