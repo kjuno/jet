@@ -2,10 +2,12 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 
 var prefix = '!';
+var red = 0xef0202;
+var green = green;
 var fs = require('fs');
 var json = JSON.parse(fs.readFileSync('./token.json', 'utf8'));
 
-function embed(string, color){
+function createEmbed(string, color){
     var embed = new Discord.RichEmbed();
     embed.setDescription(string);
     embed.setColor(color);
@@ -45,21 +47,25 @@ client.on('message', msg => {
             embed.addField("Owner:" , msg.guild.owner);
             embed.addField("Name:" , msg.guild.name);
             embed.setThumbnail(msg.guild.iconURL);
-            embed.setColor(0x3adb1e);
+            embed.setColor(green);
             channel.send(embed);
             break;
         case`${prefix}setPrefix`:
+            if(args[1] == undefined){
+                channel.send(createEmbed('Bitte gib einen Prefix an!', red));
+                return;
+            }
             prefix = args[1];
-            channel.send(embed(`Prefix wurde in \"${prefix}\" geändert!`, 0x3adb1e));
+            channel.send(createEmbed(`Prefix wurde in \"${prefix}\" geändert!`, green));
             break;
         case`${prefix}getInfo`:
             var mention = msg.mentions.members.first();
             if(!mention){
-                channel.send(embed('Bitte gib einen User an!', 0xef0202)); 
+                channel.send(createEmbed('Bitte gib einen User an!', red)); 
                 return;
             }
             var embed = new Discord.RichEmbed;
-            embed.setColor(0x3adb1e);
+            embed.setColor(green);
             embed.setTitle(`Infos über den Spieler: \"${mention.displayName}\"`)
             embed.addField("Name:", mention.user.username);
             embed.addField("Nickname:", mention.nickname == null ? 'keins' : mention.nickname);
@@ -72,7 +78,6 @@ client.on('message', msg => {
             embed.setThumbnail(mention.user.avatarURL);
             channel.send(embed);
             break;
-        
     }
 });
 
