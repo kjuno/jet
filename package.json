@@ -1,0 +1,22 @@
+{
+  "name": "jet",
+  "version": "1.0.0",
+  "description": "jet is a Disord Bot created with discord.js and JS in VSCode.\r # Installation\r jet requires [Node.js](https://nodejs.org/) and [discord.js](https://discord.js.org/#/)",
+  "main": "Bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kjuno/jet.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kjuno/jet/issues"
+  },
+  "homepage": "https://github.com/kjuno/jet#readme",
+  "dependencies": {
+    "discord.js": "^11.2.1"
+  }
+}
